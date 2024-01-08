@@ -1,12 +1,20 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 # Init app
 app = Flask(__name__)
 
+# Enable CORS for all routes
+CORS(app)
+#CORS(app, origins="http://localhost:5173")
+
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/exercise_tracker_db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/exercise_tracker_db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://postgres:postgres@localhost/exercise_tracker_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://gferrariflores:tracker_mysql@gferrariflores.mysql.pythonanywhere-services.com/gferrariflores$exercise-tracker-db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/exercise_tracker_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Init db
@@ -20,15 +28,21 @@ class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(200))
+    favorite = db.Column(db.Boolean, default=False)  # Added favorite column with default value False
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, favorite):
         self.name = name
         self.description = description
+        self.favorite = favorite
+
+# Crear la tabla usando el contexto de la aplicación Flask
+with app.app_context():
+    db.create_all()
 
 # Exercise Schema
 class ExerciseSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'favorite')
 
 # Init Schema
 exercise_schema = ExerciseSchema()
@@ -39,8 +53,9 @@ exercises_schema = ExerciseSchema(many=True)
 def add_exercise():
     name = request.json['name']
     description = request.json['description']
+    favorite = request.json['favorite']
 
-    new_exercise = Exercise(name, description)
+    new_exercise = Exercise(name, description, favorite)
 
     db.session.add(new_exercise)
     db.session.commit()
@@ -66,9 +81,11 @@ def update_exercise(id):
     exercise = Exercise.query.get(id)
     name = request.json['name']
     description = request.json['description']
+    favorite = request.json['favorite']
 
     exercise.name = name
     exercise.description = description
+    exercise.favorite = favorite
 
     db.session.commit()
 
