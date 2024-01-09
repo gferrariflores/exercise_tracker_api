@@ -4,12 +4,10 @@
 
 The Exercise Tracker API is a RESTful API built using Flask, designed to interact with a MySQL database. The primary focus of this API is to provide CRUD (Create, Read, Update, Delete) operations for managing exercises stored in the "exercise" table. This project serves as the backend for an application that aims to empower users to select their favorite exercises and create personalized workout routines.
 
-
 ## Technologies Used
 
-- **Flask:** The lightweight and flexible web framework for building the API.
-- **MySQL:** The relational database management system used for storing exercise data.
-
+- **[Flask](https://flask.palletsprojects.com/):** The lightweight and flexible web framework for building the API.
+- **[MySQL](https://www.mysql.com/):** The relational database management system used for storing exercise data.
 
 ## Project Status
 
