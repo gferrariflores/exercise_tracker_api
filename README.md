@@ -20,14 +20,25 @@ The project is currently in active development, aiming to create a robust backen
 - **CRUD Operations:** Perform Create, Read, Update, and Delete operations on exercise data.
 - **Database Integration:** Seamless integration with a MySQL database for efficient data storage and retrieval.
 
+## Project Structure
+
+The project is organized into several files and directories for better maintainability. The main components include:
+
+- `app`: Contains the main application files.
+- `config.py`: Configuration settings for the project.
+- `models.py`: Definitions of database models.
+- `routes.py`: Route definitions for the Flask application.
+- `schemas.py`: Marshmallow schemas for data serialization.
+
 ## Project Setup
 
 To set up the project locally, follow these steps:
 
 1. Clone the repository.
-2. Install the necessary dependencies using `pip install -r requirements.txt`.
-3. Configure the database connection details in the `config.py` file.
-4. Run the Flask application using `python app.py`.
+2. Create and activate a virtual environment (optional but recommended).
+3. Install the necessary dependencies using `pip install -r requirements.txt`.
+4. Configure the database connection details in your `.env` file.
+5. Run the Flask application using `python app.py`.
 
 ## Contribution
 
